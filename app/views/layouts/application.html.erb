@@ -13,7 +13,6 @@
 <body>
 
 <%= render 'layouts/header' %>
-
 <div class="container">
   <% if alert %>
     <p class="alert alert-danger fade-in"><%= alert %></p>
@@ -25,10 +24,13 @@
     <% end %>
   <% end %>
 </div>
+<br/>
 
 <%= yield %>
 
+<br/>
 <%= render 'layouts/footer' %>
+<br/>
 <%= debug(params) if Rails.env.development? %>
 
 </body>
