@@ -1,0 +1,51 @@
+<script>
+  var pin_keeper,
+      pin,
+      name,
+      mobile;
+
+  function onFormInput(){
+    pin_keeper.updatePinBtn();
+  }
+
+  function initStationForm() {
+    pin = document.getElementById("pin");
+    name = document.getElementById("admin_name");
+    mobile = document.getElementById("admin_mobile");
+
+    pin_keeper = new PinKeeper(
+        pin,
+        document.getElementById("pin_btn"),
+        "<%= refresh_pin_admin_path(current_admin) %>",
+        function(){
+          return name.value === ""|| mobile.value === "";
+        },
+        "<%= t 'commit' %>",
+        "<%= t 'send_captcha' %>",
+        "<%= t 'pin_counter_in_sec' %>"
+    );
+
+    name.oninput = onFormInput;
+    mobile.oninput = onFormInput;
+    pin.oninput = onFormInput;
+  }
+
+  document.addEventListener("turbolinks:load", initStationForm);
+</script>
+
+<%= bootstrap_form_for(admin, local: true) do |form| %>
+  <%= render 'share/errors', object: admin %>
+  <%= form.text_field :name %>
+  <%= form.text_field :mobile %>
+  <%= form.password_field :password %>
+  <%= form.password_field :password_confirmation %>
+
+  <div class="form-group">
+    <div class="input-group input-group-lg">
+      <%= number_field_tag :pin, nil, placeholder: t('captcha'), class: 'form-control' %>
+      <div class="input-group-btn">
+        <button id="pin_btn" class="btn btn-primary"></button>
+      </div>
+    </div>
+  </div>
+<% end %>

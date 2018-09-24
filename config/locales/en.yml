@@ -38,6 +38,28 @@ en:
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
+    models:
+      admin: 'Administrator'
+      teacher: 'Teacher'
+      student: 'Student'
+      chat: 'Chat'
+    attributes:
+      admin:
+        mobile: 'Mobile'
+        name: 'Name'
+        level: 'Level'
+      teacher:
+        mobile: 'Mobile'
+        name: 'Name'
+        degree: 'Degree'
+      student:
+        mobile: 'Mobile'
+        name: 'Name'
+        grade: 'Grade'
+      chat:
+        student_mobile: 'Student mobile'
+        teacher_mobile: 'Teacher mobile'
+        duration_minutes: 'Duration in minutes'
   date:
     abbr_day_names:
     - Sun
@@ -243,5 +265,21 @@ en:
       short: "%d %b %I:%M %p"
     pm: pm
 
+  sessions:
+    invalid_combination: 'Invalid account name and password combination'
   copyright: '2018 Xing'
   home: 'Home'
+  no_privilege: 'No privilege'
+  creating_success: 'Successfully created'
+  creating_failed: 'Failed on creating'
+  updating_success: 'Successfully updated'
+  updating_failed: 'Failed on updating'
+  deleting_success: 'Successfully deleted'
+  deleting_failed: 'Failed on deleting'
+  login: 'Sign in'
+  mobile: 'Mobile'
+  password: 'Password'
+  search: 'Search'
+  admin: 'Administrator'
+  teacher: 'Teacher'
+  student: 'Student'
