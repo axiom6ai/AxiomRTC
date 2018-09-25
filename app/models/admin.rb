@@ -50,7 +50,7 @@ class Admin < ApplicationRecord
 
 
   def root?
-    level == Admin.ROOT
+    level == Admin::ROOT
   end
 
   def level_title

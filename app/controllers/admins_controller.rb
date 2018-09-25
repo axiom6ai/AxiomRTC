@@ -64,8 +64,9 @@ class AdminsController < ApplicationController
     return nil unless params[:admin]
     params[:admin].delete :level unless current_admin.root?
     # Do not allow creating root directly
-    params[:admin][:level] = Admin.NORMAL if params[:admin][:level] == Admin.ROOT
-    params.require(:admin).permit(:name, :mobile, :level, :password, :password_confirmation)
+    params[:admin][:level] = Admin::NORMAL if params[:admin][:level] == Admin::ROOT
+    # Ignore :level
+    params.require(:admin).permit(:name, :mobile, :password, :password_confirmation)
   end
 
   def only_self_or_root

@@ -50,9 +50,9 @@ ActiveRecord::Schema.define(version: 2018_09_23_162847) do
   end
 
   create_table "teachers", force: :cascade do |t|
-    t.string "mobile"
+    t.string "mobile", null: false
     t.string "name", null: false
-    t.string "degree", null: false
+    t.integer "degree", null: false
     t.integer "student_count", default: 0
     t.integer "chat_count", default: 0
     t.integer "chat_minutes", default: 0
