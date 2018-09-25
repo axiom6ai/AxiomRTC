@@ -1,7 +1,9 @@
 class StudentsController < ApplicationController
-  before_action :logged_in_admin, except: [:edit, :update]
-  before_action :logged_in_student, only: [:edit, :update], unless: :current_admin
+  before_action :logged_in, except: [:new, :create]
+  before_action :logged_in_admin, only: [:destroy]
   before_action :set_student, only: [:show, :edit, :update, :destroy]
+  before_action :only_self, only: [:edit, :update], unless: :current_admin
+  before_action :only_self_or_own_teacher, only: [:show], unless: :current_admin
 
   # GET /students
   # GET /students.json
@@ -63,22 +65,31 @@ class StudentsController < ApplicationController
   def destroy
     @student.destroy
     respond_to do |format|
-      format.html {redirect_to students_url, notice: t('deleting_success')}
+      format.html {redirect_to students_path, notice: t('deleting_success')}
       format.json {head :no_content}
     end
   end
 
   private
 
-  def check_self
+  def only_self_or_own_teacher
+    if current_teacher
+      redirect_back fallback_location: root_path, alert: t('no_privilege') unless
+          current_teacher.id == @student.teacher_id
+    else
+      redirect_back fallback_location: root_path, alert: t('no_privilege') unless
+          current_student && current_student.id == @student.id
+    end
+  end
+
+  def only_self
     redirect_back fallback_location: root_path, alert: t('no_privilege') unless
-        current_student.id == @student.id
+        current_student && current_student.id == @student.id
   end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_student
     @student = Student.find(params[:id])
-    check_self
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

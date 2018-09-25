@@ -17,3 +17,15 @@
 //= require popper
 //= require_tree .
 //= require_self
+
+function removeElement(elementId) {
+    var element = document.getElementById(elementId);
+    element.parentNode.removeChild(element);
+}
+
+function removeChildElements(elementId){
+  var element = document.getElementById(elementId);
+  while(element.firstChild){
+    element.removeChild(element.firstChild);
+  }
+}

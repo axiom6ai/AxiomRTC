@@ -3,7 +3,7 @@ class ChatsController < ApplicationController
   before_action :logged_in_user, only: [:new, :create]
   before_action :set_chat, only: [:show, :update]
 
-  # layout true, except: [:index]
+  layout false, only: [:new]
 
   # GET /chats
   def index

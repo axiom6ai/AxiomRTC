@@ -1,7 +1,8 @@
 class TeachersController < ApplicationController
-  before_action :logged_in_admin, except: [:edit, :update]
-  before_action :logged_in_student, only: [:edit, :update], unless: :current_admin
+  before_action :logged_in_admin, expect: [:show, :edit, :update]
   before_action :set_teacher, only: [:show, :edit, :update, :destroy]
+  before_action :only_self, only: [:edit, :update], unless: :current_admin
+  before_action :only_self_or_own_student, only: [:show], unless: :current_admin
 
   # GET /teachers
   # GET /teachers.json
@@ -70,15 +71,25 @@ class TeachersController < ApplicationController
 
   private
 
-  def check_self
+
+  def only_self_or_own_student
+    if current_student
+      redirect_back fallback_location: root_path, alert: t('no_privilege') unless
+          current_student.teacher_id == @teacher.id
+    else
+      redirect_back fallback_location: root_path, alert: t('no_privilege') unless
+          current_teacher && current_teacher.id == @teacher.id
+    end
+  end
+
+  def only_self
     redirect_back fallback_location: root_path, alert: t('no_privilege') unless
-        current_teacher.id == @teacher.id
+        current_teacher && current_teacher.id == @teacher.id
   end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_teacher
     @teacher = Teacher.find(params[:id])
-    check_self
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

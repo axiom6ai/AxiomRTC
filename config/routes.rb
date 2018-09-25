@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'teacher/login', to: 'teacher_sessions#new'
   delete 'teacher/logout', to: 'teacher_sessions#destroy'
   get 'student/login', to: 'student_sessions#new'
+  get 'student/logon', to: 'students#new'
   delete 'student/logout', to: 'student_sessions#destroy'
 
   resources :admins, constraints: {format: :html}

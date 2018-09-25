@@ -26,8 +26,10 @@ class Chat < ApplicationRecord
     !(duration_minutes && (!teacher_leaved_at || !student_leaved_at))
   end
 
-  def stopped?
-    !!duration_minutes
+  def stopped_at
+    return nil unless student_leaved_at && teacher_leaved_at
+    student_leaved_at < teacher_leaved_at ?
+        student_leaved_at : teacher_leaved_at
   end
 
 end
