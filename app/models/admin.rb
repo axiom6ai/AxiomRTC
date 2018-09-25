@@ -17,6 +17,10 @@ class Admin < ApplicationRecord
     end
   end
 
+  def self.level_map
+    Admin.levels.map{|i| [Admin.to_level_title(i), i]}
+  end
+
   self.primary_key = :mobile
 
   def to_param

@@ -8,6 +8,10 @@ class Chat < ApplicationRecord
              foreign_key: :teacher_id,
              inverse_of: :chats
 
+  validates :name,
+            presence: true,
+            length: {maximum: 128}
+
   validate :should_have_an_owner
   validate :should_have_start_time
   validate :should_consistent_for_duration_and_stop_time

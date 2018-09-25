@@ -20,7 +20,7 @@ class TeacherSessionsController < ApplicationController
 
   def destroy
     logout_teacher
-    redirect_to teacher_login_path
+    redirect_to new_teacher_sessions_path
   end
 
   def prevent_duplicated

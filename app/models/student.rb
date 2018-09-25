@@ -38,6 +38,10 @@ class Student < ApplicationRecord
     end
   end
 
+  def self.grade_map
+    Student.grades.map{|i| [Student.to_grade_title(i), i]}
+  end
+
   has_many :chats,
            foreign_key: :student_id,
            inverse_of: :student

@@ -9,27 +9,27 @@ class ApplicationController < ActionController::Base
 
   def logged_in_admin
     return if current_admin
-    redirect_to admin_login_path
+    redirect_to new_admin_sessions_path
   end
 
   def logged_in_teacher
     return if current_teacher
-    redirect_to teacher_login_path
+    redirect_to new_teacher_sessions_path
   end
 
   def logged_in_student
     return if current_student
-    redirect_to student_login_path
+    redirect_to login_path
   end
 
   def logged_in
-    return if current_admin || current_teacher || current_student
-    redirect_to student_login_path
+    return if current_student || current_teacher || current_admin
+    redirect_to login_path
   end
 
   def logged_in_user
     return if current_teacher || current_student
-    redirect_to student_login_path
+    redirect_to login_path
   end
 
 end

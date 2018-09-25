@@ -24,7 +24,7 @@
             <ul class="dropdown-menu" aria-labelledby="mine">
               <li><%= link_to t('my_profile'), current_admin %></li>
               <li role="separator" class="divider"></li>
-              <li><%= link_to t('logout'), admin_logout_path, method: :delete %></li>
+              <li><%= link_to t('logout'), admin_sessions_path, method: :delete %></li>
             </ul>
           </li>
 
@@ -41,7 +41,7 @@
             <ul class="dropdown-menu" aria-labelledby="mine">
               <li><%= link_to t('my_profile'), current_teacher %></li>
               <li role="separator" class="divider"></li>
-              <li><%= link_to t('logout'), teacher_logout_path, method: :delete %></li>
+              <li><%= link_to t('logout'), teacher_sessions_path, method: :delete %></li>
             </ul>
           </li>
 
@@ -57,7 +57,7 @@
             <ul class="dropdown-menu" aria-labelledby="mine">
               <li><%= link_to t('my_profile'), current_student %></li>
               <li role="separator" class="divider"></li>
-              <li><%= link_to t('logout'), student_logout_path, method: :delete %></li>
+              <li><%= link_to t('logout'), logout_path, method: :delete %></li>
             </ul>
           </li>
 

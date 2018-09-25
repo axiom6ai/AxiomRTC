@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2018_09_23_162847) do
   end
 
   create_table "chats", force: :cascade do |t|
+    t.string "CreateChats", null: false
     t.integer "student_id"
     t.datetime "student_started_at"
     t.datetime "student_leaved_at"

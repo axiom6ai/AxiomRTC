@@ -1,17 +1,11 @@
-<%= form_with(model: student, local: true) do |form| %>
-  <% if student.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(student.errors.count, "error") %> prohibited this student from being saved:</h2>
-
-      <ul>
-      <% student.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
+<%= bootstrap_form_for(student, local: true) do |form| %>
+  <%= render 'share/errors', object: student %>
+  <% if student.new_record? %>
+    <%= form.text_field :mobile %>
   <% end %>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= form.text_field :name %>
+  <%= form.select :grade, Student.grade_map, {inlcude_blank: true} %>
+  <%= form.password_field :password %>
+  <%= form.password_field :password_confirmation %>
+  <%= form.submit t 'commit' %>
 <% end %>

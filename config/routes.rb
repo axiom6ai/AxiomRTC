@@ -1,13 +1,9 @@
 Rails.application.routes.draw do
   root 'chats#index'
 
-  get 'admin/login', to: 'admin_sessions#new', constraints: {format: :html}
-  delete 'admin/logout', to: 'admin_sessions#destroy', constraints: {format: :html}
-  get 'teacher/login', to: 'teacher_sessions#new'
-  delete 'teacher/logout', to: 'teacher_sessions#destroy'
-  get 'student/login', to: 'student_sessions#new'
-  get 'student/logon', to: 'students#new'
-  delete 'student/logout', to: 'student_sessions#destroy'
+  get 'login', to: 'student_sessions#new'
+  get 'logon', to: 'students#new'
+  delete 'logout', to: 'student_sessions#destroy'
 
   resources :admins, constraints: {format: :html}
   resources :teachers

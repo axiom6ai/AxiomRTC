@@ -26,6 +26,10 @@ class Teacher < ApplicationRecord
     end
   end
 
+  def self.degree_map
+    Teacher.degrees.map{|i| [Teacher.to_degree_title(i), i]}
+  end
+
 
   has_many :chats,
            foreign_key: :teacher_id,

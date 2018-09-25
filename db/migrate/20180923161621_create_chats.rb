@@ -1,6 +1,7 @@
 class CreateChats < ActiveRecord::Migration[5.2]
   def change
     create_table :chats do |t|
+      t.string name, null: false
       t.integer :student_id
       t.datetime :student_started_at
       t.datetime :student_leaved_at

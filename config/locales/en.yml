@@ -57,6 +57,7 @@ en:
         name: 'Name'
         grade: 'Grade'
       chat:
+        name: 'Channel name'
         student_mobile: 'Student mobile'
         teacher_mobile: 'Teacher mobile'
         duration_minutes: 'Duration in minutes'
@@ -280,6 +281,8 @@ en:
   login: 'Sign in'
   logon: 'Sign up'
   logout: 'Sign out'
+  create: 'Create'
+  commit: 'Commit'
   mobile: 'Mobile'
   password: 'Password'
   search: 'Search'

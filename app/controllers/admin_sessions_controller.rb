@@ -20,7 +20,7 @@ class AdminSessionsController < ApplicationController
 
   def destroy
     logout_admin
-    redirect_to admin_login_path
+    redirect_to new_admin_sessions_path
   end
 
   def prevent_duplicated
