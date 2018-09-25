@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'chats#index'
+  root 'chats#new'
 
   get 'login', to: 'student_sessions#new'
   get 'logon', to: 'students#new'

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AxiomLive</title>
+  <title><%= t 'axiom_live' %>></title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
@@ -16,7 +16,7 @@
   <div class="container">
     <div class="navbar-header">
       <a class="navbar-brand" , href="/">
-        <strong><%= t 'axiom_live' %>></strong>
+        <strong><%= t 'axiom_live' %></strong>
       </a>
     </div>
     <div>
@@ -27,23 +27,15 @@
           <li class="dropdown">
             <a class="dropdown-toggle" type="button" id="audio_source"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" href="#">
-              <%= t('audio_source') %>
             </a>
             <ul class="dropdown-menu" aria-labelledby="audio_source">
-              <li>
-                <button class="btn btn-primary" id="as">tmp</button>
-              </li>
             </ul>
           </li>
           <li class="dropdown">
             <a class="dropdown-toggle" type="button" id="video_source"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" href="#">
-              <%= t('video_source') %>
             </a>
             <ul class="dropdown-menu" aria-labelledby="video_source">
-              <li>
-                <button class="btn btn-primary" id="vs">tmp</button>
-              </li>
             </ul>
           </li>
         <% end %>
@@ -151,9 +143,9 @@
       removeChildElements('video_source');
       for (var i = 0; i !== devices.length; ++i) {
         const device = devices[i];
-        const html = '<button class="btn btn-primary">' + device.label + '</button>';
         var newElement = document.createElement('li');
-        newElement.innerText = html;
+        newElement.innerText = device.label;
+        newElement.setAttribute('class', 'btn btn-primary');
         if (device.kind === 'audioinput') {
           newElement.setAttribute('id', 'audio_source_' + i);
           audio_src.appendChild(newElement);
