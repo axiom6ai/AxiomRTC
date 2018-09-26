@@ -2,7 +2,7 @@ class ChatsController < ApplicationController
   before_action :logged_in
   before_action :set_chat, only: [:show, :update]
 
-  layout false, except: [:new]
+  layout false, only: [:new]
 
   # GET /chats
   def index
