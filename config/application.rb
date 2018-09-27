@@ -13,7 +13,7 @@ module AxiomRTC
 
     config.time_zone = 'Beijing'
     config.i18n.load_path += Dir[Rails.root.join('config','locales', '**', '*.{rb,yml}')]
-    I18n.available_locales = [:en]
+    I18n.available_locales = [:en, :cn]
     I18n.default_locale = :en
 
     # Settings in config/environments/* take precedence over those specified here.

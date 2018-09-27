@@ -26,6 +26,24 @@ Fire up the server:
     
 Now you can visit `http://localhost:3000`
 
+## Localize
+
+Support both Chinese and English, change following line in `config/application.rb`
+
+~~~ruby
+    I18n.default_locale = :en
+~~~
+    
+to 
+
+~~~ruby
+    I18n.default_locale = :cn
+~~~
+    
+to enable Chinese version.
+
+It's better to add localization parsing in routing.
+
 ## Characters
 
 * Administrators
