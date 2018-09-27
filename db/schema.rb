@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2018_09_27_024637) do
     t.integer "admin_id", null: false
     t.integer "chat_id", null: false
     t.datetime "start_at", null: false
-    t.datetime "end_at"
+    t.datetime "end_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_admin_chattings_on_admin_id"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2018_09_27_024637) do
     t.integer "student_id", null: false
     t.integer "chat_id", null: false
     t.datetime "start_at", null: false
-    t.datetime "end_at"
+    t.datetime "end_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_id"], name: "index_student_chattings_on_chat_id"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2018_09_27_024637) do
     t.integer "teacher_id", null: false
     t.integer "chat_id", null: false
     t.datetime "start_at", null: false
-    t.datetime "end_at"
+    t.datetime "end_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_id"], name: "index_teacher_chattings_on_chat_id"

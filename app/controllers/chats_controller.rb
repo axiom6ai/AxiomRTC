@@ -5,11 +5,21 @@ class ChatsController < ApplicationController
   # GET /chats
   def index
     if current_student
-      current_student.chats
+      @chats = current_student.chats
     elsif current_teacher
-      current_teacher.chats
+      @chats = current_teacher.chats
     else
-      Chat.all
+      if (mobile = params[:mobile])
+        @chats = []
+        student = Student.find_by_mobile mobile
+        @chats += student.chats if student
+        teacher = Teacher.find_by_mobile mobile
+        @chats += teacher.chats if teacher
+        admin = Admin.find_by_mobile mobile
+        @chats += admin.chats if admin
+      else
+        @chats = Chat.all
+      end
     end
   end
 
@@ -49,7 +59,7 @@ class ChatsController < ApplicationController
   end
 
   def chat_params
-    @chat_params = params.fetch :chat, {}
+    @chat_params = params.require(:chat).permit(:name)
   end
 
 end

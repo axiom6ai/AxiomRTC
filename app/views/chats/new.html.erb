@@ -2,16 +2,16 @@
   <div class="jumbotron row">
     <div class="col-sm-8">
       <div class="select">
-        <label for="audioSource">Audio source: </label><select id="audioSource"></select>
+        <label for="audioSource"><%= t '.audio_src' %>: </label><select id="audioSource"></select>
       </div>
       <div class="select">
-        <label for="videoSource">Video source: </label><select id="videoSource"></select>
+        <label for="videoSource"><%= t'.video_src' %>: </label><select id="videoSource"></select>
       </div>
     </div>
     <div class="col-sm-4">
       <div class="row">
-        <button id="join" class="btn btn-primary" onclick="join()">Join</button>
-        <button id="leave" class="btn btn-primary" onclick="leave()">Leave</button>
+        <button id="join" class="btn btn-primary" onclick="join()"><%= t '.join' %></button>
+        <button id="leave" class="btn btn-primary" onclick="leave()"><%= t '.leave' %></button>
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
 <script language="javascript">
 
   if (!AgoraRTC.checkSystemRequirements()) {
-    alert("Your browser does not support WebRTC!");
+    alert("<%= t('.not_compatible') %>");
   }
 
   AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.INFO);

@@ -58,9 +58,6 @@ en:
         grade: 'Grade'
       chat:
         name: 'Channel name'
-        student_mobile: 'Student mobile'
-        teacher_mobile: 'Teacher mobile'
-        duration_minutes: 'Duration in minutes'
   date:
     abbr_day_names:
     - Sun
@@ -268,7 +265,31 @@ en:
 
   sessions:
     invalid_combination: 'Invalid account name and password combination'
-  copyright: '2018 Xing'
+  chats:
+    new:
+      not_compatible: 'Your browser does not support WebRTC!'
+      join: 'Join'
+      leave: 'Leave'
+      video_src: 'Video sources'
+      audio_src: 'Audio sources'
+    index:
+      pattern: 'Mobile'
+  admins:
+    edit:
+      title: 'Edit Administrator Information'
+    new:
+      title: 'New Administrator'
+  students:
+    edit:
+      title: 'Edit Student information'
+    new:
+      title: 'New Student'
+  teachers:
+    edit:
+      title: 'Edit Teacher information'
+    new:
+      title: 'New Teacher'
+  copyright: '2018 Axiom'
   axiom_live: 'Axiom Live'
   home: 'Home'
   no_privilege: 'No privilege'
@@ -284,6 +305,11 @@ en:
   create: 'Create'
   commit: 'Commit'
   mobile: 'Mobile'
+  grade: 'Grade'
+  level: 'Level'
+  degree: 'Degree'
+  start_at: 'Start at'
+  end_at: 'End at'
   password: 'Password'
   search: 'Search'
   admin: 'Administrator'
@@ -295,3 +321,16 @@ en:
   video_source: 'Video source'
   audio_source: 'Audio source'
   name: 'Name'
+  new: 'New'
+  no_admins: 'No administrators'
+  no_chats: 'No chats'
+  no_teachers: 'No teachers'
+  no_students: 'No students'
+  chat_count: 'Chat count'
+  admin_count: 'Admin count'
+  teacher_count: 'Teacher count'
+  student_count: 'Student count'
+  more: 'More'
+  id: 'ID'
+  duration: 'Duration'
+  chatters: 'Chatters'

@@ -1,0 +1,52 @@
+<div class="container">
+
+  <div class="jumbotron">
+
+    <p>
+      <strong><%= t 'chat' %></strong>
+      <%= @chat.id %>
+    </p>
+
+    <p>
+      <strong><%= t 'name' %></strong>
+      <%= @chat.name %>
+    </p>
+
+    <% now = DateTime.now %>
+    <% start_at = now %>
+    <% end_at = now - 99.years %>
+
+    <% @chat.admin_chattings.each do |c| %>
+      <% start_at = c.start_at if start_at > c.start_at %>
+      <% end_at = c.end_at if end_at < c.end_at %>
+    <% end %>
+    <% @chat.teacher_chattings.each do |c| %>
+      <% start_at = c.start_at if start_at > c.start_at %>
+      <% end_at = c.end_at if end_at < c.end_at %>
+    <% end %>
+    <% @chat.student_chattings.each do |c| %>
+      <% start_at = c.start_at if start_at > c.start_at %>
+      <% end_at = c.end_at if end_at < c.end_at %>
+    <% end %>
+
+    <p>
+      <strong><%= t 'duration' %></strong>
+      <%= "#{start_at} ~ #{end_at}" %>
+    </p>
+
+    <p>
+      <strong><%= t 'chatters' %></strong>
+      <% @chat.admins.each do |c| %>
+        <%= link_to c.name, admin_path(c) %>,
+      <% end %>
+      <% @chat.teachers.each do |c| %>
+        <%= link_to c.name, teacher_path(c) %>,
+      <% end %>
+      <% @chat.students.each do |c| %>
+        <%= link_to c.name, student_path(c) %>,
+      <% end %>
+    </p>
+
+  </div>
+
+</div>

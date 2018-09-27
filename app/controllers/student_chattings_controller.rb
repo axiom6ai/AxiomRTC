@@ -5,6 +5,7 @@ class StudentChattingsController < ApplicationController
   def create
     @student_chatting = StudentChatting.new(student_chatting_params)
     @student_chatting.start_at = DateTime.now
+    @student_chatting.start_at = @student_chatting.start_at + 1.minute
 
     if @student_chatting.save
       render json: {id: @student_chatting.id}, status: :ok

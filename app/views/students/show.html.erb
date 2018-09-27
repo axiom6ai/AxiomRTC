@@ -1,4 +1,45 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
 
-<%= link_to 'Edit', edit_student_path(@student) %> |
-<%= link_to 'Back', students_path %>
+  <div class="jumbotron">
+
+    <a class="btn btn-primary btn-lg pull-right" href="<%= edit_student_path %>">
+      <span class="glyphicon glyphicon-cog"></span>
+    </a>
+
+    <p>
+      <strong><%= t 'student' %></strong>:
+      <%= @student.name %>
+    </p>
+
+    <p>
+      <strong><%= t 'mobile' %></strong>:
+      <%= @student.mobile %>
+    </p>
+
+    <p>
+      <strong><%= t 'grade' %></strong>:
+      <%= Student.to_grade_title @student.grade %>
+    </p>
+
+    <p>
+      <strong><%= t 'chat_count' %></strong>:
+      <%= @student.chats.size %>
+    </p>
+
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <p class="panel-title pull-left"><%= t 'chat' %></p>
+      <%= link_to t('more'),
+                  chats_path,
+                  class: 'btn btn-primary pull-right' %>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="list-group">
+      <%= render(@student.chats[0..9]) || t('no_chats') %>
+    </div>
+  </div>
+
+</div>

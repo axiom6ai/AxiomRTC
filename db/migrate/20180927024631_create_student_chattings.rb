@@ -4,7 +4,7 @@ class CreateStudentChattings < ActiveRecord::Migration[5.2]
       t.integer :student_id, null: false
       t.integer :chat_id, null: false
       t.datetime :start_at, null: false
-      t.datetime :end_at
+      t.datetime :end_at, null: false
 
       t.timestamps
     end

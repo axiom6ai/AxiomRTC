@@ -44,7 +44,8 @@ class Student < ApplicationRecord
 
   belongs_to :teacher,
              foreign_key: :teacher_id,
-             inverse_of: :students
+             inverse_of: :students,
+             optional: true
 
   has_many :student_chattings,
            foreign_key: :student_id,

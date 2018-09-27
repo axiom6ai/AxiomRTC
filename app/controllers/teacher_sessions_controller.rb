@@ -6,7 +6,7 @@ class TeacherSessionsController < ApplicationController
   end
 
   def create
-    teacher = Teacher.find_by_id params[:session][:id]
+    teacher = Teacher.find_by_mobile params[:session][:mobile]
     unless teacher && teacher.authenticate(params[:session][:password])
       flash.now[:alert] = t 'sessions.invalid_combination'
       render 'new' and return

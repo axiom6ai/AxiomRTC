@@ -1,10 +1,30 @@
 # AxiomRTC
 
-Axiom Real Time Communication.
+Axiom Real Time Online Classing
 
 ## Overview
 
 Online learning center for education.
+
+## Getting started
+
+Make sure Ruby is installed.
+
+    $ ruby -v
+
+Install requirements:
+
+    $ bundle
+    
+Setup database:
+
+    $ rails db:migrate && rails db:setup
+    
+Fire up the server:
+
+    $ rails s
+    
+Now you can visit `http://localhost:3000`
 
 ## Characters
 
@@ -14,8 +34,9 @@ Online learning center for education.
 
 ## Chatting
 
-* 1 to 1: 1 student + 1 teacher
-* 1 to 1: 1 student + 1 administrator
+* n to n: n students + n teachers + n administrator
+
+You can add strangers into the chatting if you want.
 
 ## TODOs
 
@@ -25,7 +46,6 @@ Online learning center for education.
 * Enable recording on chatting
 * Enable guardian (of students) and administrator spot checking on chatting
 * Use Redis for chatting cache
-* I18n for Chinese
 * Enable mobile phone number ownership checking
 * Billing
 

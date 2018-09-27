@@ -1,1 +1,39 @@
-Chats#index
+<div class="container">
+
+  <% if current_admin %>
+    <div class="jumbotron">
+      <%= form_tag(chats_path, method: :get, html: {class: 'form-horizontal'}) do %>
+        <div class="input-group input-group-lg">
+        <span class="input-group-addon">
+      <%= check_box_tag :should_pay_only, 1, params[:should_pay_only] %>
+    </span>
+          <%= text_field_tag :mobile,
+                             nil,
+                             class: 'form-control',
+                             placeholder: t('.pattern'),
+                             value: params[:mobile] || '' %>
+          <div class="input-group-btn">
+            <%= submit_tag t('search'), class: 'btn btn-primary' %>
+          </div>
+        </div><!-- /input-group -->
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <p class="panel-title pull-left"><%= t 'chat' %></p>
+      <div class="clearfix"></div>
+    </div>
+
+
+    <div class="panel-body">
+      <%= will_paginate if @chats && @chats.size > 0 && @chats.instance_of?(ActiveRecord::Relation) %>
+    </div>
+
+    <div class="list-group">
+      <%= render(@chats) || t('no_chats') %>
+    </div>
+  </div>
+
+</div>

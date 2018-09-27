@@ -53,13 +53,16 @@ chat.save!
 
 AdminChatting.create! admin_id: admin.id,
                       chat_id: chat.id,
-                      start_at: DateTime.now
+                      start_at: DateTime.now,
+                      end_at: DateTime.now
 
 
 TeacherChatting.create! teacher_id: teachers[0].id,
                         chat_id: chat.id,
-                        start_at: DateTime.now
+                        start_at: DateTime.now,
+                        end_at: DateTime.now
 
 StudentChatting.create! student_id: Student.first.id,
                         chat_id: chat.id,
-                        start_at: DateTime.now
+                        start_at: DateTime.now,
+                        end_at: DateTime.now

@@ -18,8 +18,22 @@
 
     <p>
       <strong><%= t 'level' %></strong>:
-      <%= @admin.level %>
+      <%= Admin.to_level_title @admin.level %>
     </p>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <p class="panel-title pull-left"><%= t 'chat' %></p>
+      <%= link_to t('more'),
+                  chats_path,
+                  class: 'btn btn-primary pull-right' %>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="list-group">
+      <%= render(@admin.chats[0..9]) || t('no_chats') %>
+    </div>
   </div>
 
 </div>

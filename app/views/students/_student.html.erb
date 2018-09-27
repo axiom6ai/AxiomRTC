@@ -1,0 +1,7 @@
+<li class="list-group-item">
+  <%= link_to "#{student.name},
+  #{t 'mobile'} #{student.mobile},
+  #{t 'grade'} #{student.grade},
+  #{t 'chat_count'} #{student.chats.count}",
+              student %>
+</li>
