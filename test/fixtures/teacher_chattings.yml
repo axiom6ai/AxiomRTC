@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  teacher_id: 1
+  chat_id: 1
+  start_at: 2018-09-27 10:46:37
+  end_at: 2018-09-27 10:46:37
+
+two:
+  teacher_id: 1
+  chat_id: 1
+  start_at: 2018-09-27 10:46:37
+  end_at: 2018-09-27 10:46:37

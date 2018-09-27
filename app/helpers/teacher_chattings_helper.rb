@@ -1,0 +1,2 @@
+module TeacherChattingsHelper
+end

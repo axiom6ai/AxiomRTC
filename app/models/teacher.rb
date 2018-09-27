@@ -30,14 +30,16 @@ class Teacher < ApplicationRecord
     Teacher.degrees.map{|i| [Teacher.to_degree_title(i), i]}
   end
 
-
-  has_many :chats,
-           foreign_key: :teacher_id,
-           inverse_of: :teacher
-
   has_many :students,
            foreign_key: :teacher_id,
            inverse_of: :teacher
+
+  has_many :teacher_chattings,
+           foreign_key: :teacher_id,
+           inverse_of: :teacher
+
+  has_many :chats, through: :teacher_chattings
+
 
   has_secure_password
 

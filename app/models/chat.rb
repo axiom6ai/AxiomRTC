@@ -1,12 +1,16 @@
 class Chat < ApplicationRecord
 
-  belongs_to :student,
-             foreign_key: :student_id,
-             inverse_of: :chats
+  has_many :admin_chattings,
+           foreign_key: :chat_id,
+           inverse_of: :chat
 
-  belongs_to :teacher,
-             foreign_key: :teacher_id,
-             inverse_of: :chats
+  has_many :student_chattings,
+           foreign_key: :chat_id,
+           inverse_of: :chat
+
+  has_many :teacher_chattings,
+           foreign_key: :chat_id,
+           inverse_of: :chat
 
   validates :name,
             presence: true,

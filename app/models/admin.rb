@@ -27,6 +27,14 @@ class Admin < ApplicationRecord
     mobile
   end
 
+
+  has_many :admin_chattings,
+           foreign_key: :admin_id,
+           inverse_of: :admin
+
+  has_many :chats, through: :admin_chattings
+
+
   has_secure_password
 
   validates :password,

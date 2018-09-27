@@ -42,13 +42,16 @@ class Student < ApplicationRecord
     Student.grades.map{|i| [Student.to_grade_title(i), i]}
   end
 
-  has_many :chats,
-           foreign_key: :student_id,
-           inverse_of: :student
-
   belongs_to :teacher,
              foreign_key: :teacher_id,
              inverse_of: :students
+
+  has_many :student_chattings,
+           foreign_key: :student_id,
+           inverse_of: :student
+
+  has_many :chats, through: :student_chattings
+
 
   has_secure_password
 

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :teacher_chattings
+  resources :student_chattings
+  resources :admin_chattings
   root 'chats#new'
 
   get 'login', to: 'student_sessions#new'

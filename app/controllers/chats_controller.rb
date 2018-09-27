@@ -2,36 +2,28 @@ class ChatsController < ApplicationController
   before_action :logged_in
   before_action :set_chat, only: [:show, :update]
 
-  layout false, only: [:new]
-
   # GET /chats
   def index
-    filter = {}
-    filter[:teacher_mobile] = current_teacher.mobile if current_teacher
-    filter[:student_mobile] = current_student.mobile if current_student
-
-    if chat_params[:quest] && !chat_params[:quest].empty?
-      chat_params[:quest].scan /((\w+)?\s+(\d+))/ do |x, y, z|
-        case y
-        when /teacher/
-          filter[:teacher_mobile] = z unless current_teacher
-        when /student/
-          filter[:student_mobile] = z unless current_student
-        end
-      end
-    end
-
-    if filter[:teacher_mobile] || filter[:student_mobile]
-      @tickets = Chat.where(filter).paginate(page: params[:page], per_page: 10)
+    if current_student
+      current_student.chats
+    elsif current_teacher
+      current_teacher.chats
     else
-      @tickets = Chat.all.paginate(page: params[:page], per_page: 10)
+      Chat.all
     end
-
   end
 
   # GET /chats/new
   def new
-    @chat = Chat.new
+    @app_id = '6c503009f94f42459ffa73cbd8a4c7de'
+    @local_uid = if current_admin
+                   current_admin.mobile % 100000
+                 elsif current_teacher
+                   current_teacher.id
+                 elsif current_student
+                   current_student.id
+                 end
+    @chat = Chat.new name: '1000'
   end
 
   # POST /chats.json
@@ -43,7 +35,7 @@ class ChatsController < ApplicationController
       if @chat.save
         format.json {head :ok}
       else
-        format.js {logger.error "chats#create: #{@chat.errors}" }
+        format.js {logger.error "chats#create: #{@chat.errors}"}
         format.json {render json: @chat.errors, status: :unprocessable_entity}
       end
     end
@@ -59,9 +51,9 @@ class ChatsController < ApplicationController
   def update
     respond_to do |format|
       if @chat.update chat_params
-        format.json{head :ok}
+        format.json {head :ok}
       else
-        format.js {logger.error "chats#update: #{@chat.errors}" }
+        format.js {logger.error "chats#update: #{@chat.errors}"}
         format.json {render json: @chat.errors, status: :unprocessable_entity}
       end
     end
@@ -71,8 +63,7 @@ class ChatsController < ApplicationController
   private
 
   def check_privilege
-    redirect_back fallback_location: root_path, alert: t('no_privilege') unless
-        current_admin ||
+    redirect_back fallback_location: root_path, alert: t('no_privilege') unless current_admin ||
         (current_teacher && current_teacher.id == @chat.teacher_id) ||
         (current_student && current_student.id == @chat.student_id)
   end
