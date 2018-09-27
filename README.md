@@ -52,9 +52,26 @@ It's better to add localization parsing in routing.
 
 ## Chatting
 
-* n to n: n students + n teachers + n administrator
+* n to n
+ 
+n students + n teachers + n administrator
 
-You can add strangers into the chatting if you want.
+Where `n` is a limited number.
+
+You can also add strangers into the chatting if you want.
+
+## Accounts
+
+In development environment, accounts are settled up in `db/seeds`.
+
+Briefly:
+
+* All passwords are '12345678'
+* Administrtor mobiles: 10000000001, 20000000000...20000000005
+* Teacher mobiles: 30000000000...30000000016
+* Student mobiles: 40000000000...40000000140
+
+Use them to sign in for testing.
 
 ## TODOs
 
