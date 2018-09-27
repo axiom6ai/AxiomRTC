@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
   before_action :logged_in
-  before_action :set_chat, only: [:show, :update]
+  before_action :set_chat, only: [:show]
 
   # GET /chats
   def index
@@ -15,29 +15,18 @@ class ChatsController < ApplicationController
 
   # GET /chats/new
   def new
-    @app_id = '6c503009f94f42459ffa73cbd8a4c7de'
-    @local_uid = if current_admin
-                   current_admin.mobile % 100000
-                 elsif current_teacher
-                   current_teacher.id
-                 elsif current_student
-                   current_student.id
-                 end
     @chat = Chat.new name: '1000'
-  end
+    if @chat.save
+      @app_id = '6c503009f94f42459ffa73cbd8a4c7de'
+      @local_uid = if current_admin
+                     current_admin.mobile % 100000
+                   elsif current_teacher
+                     current_teacher.id
+                   elsif current_student
+                     current_student.id
+                   end
+    else
 
-  # POST /chats.json
-  # POST /chats.js
-  def create
-    @chat = Chat.new(chat_params)
-
-    respond_to do |format|
-      if @chat.save
-        format.json {head :ok}
-      else
-        format.js {logger.error "chats#create: #{@chat.errors}"}
-        format.json {render json: @chat.errors, status: :unprocessable_entity}
-      end
     end
   end
 
@@ -45,20 +34,6 @@ class ChatsController < ApplicationController
   def show
 
   end
-
-  # PUT /chats/:id.json
-  # PUT /chats/:id.js
-  def update
-    respond_to do |format|
-      if @chat.update chat_params
-        format.json {head :ok}
-      else
-        format.js {logger.error "chats#update: #{@chat.errors}"}
-        format.json {render json: @chat.errors, status: :unprocessable_entity}
-      end
-    end
-  end
-
 
   private
 

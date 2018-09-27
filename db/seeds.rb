@@ -8,11 +8,12 @@
 
 DB_PASSWORD = '12345678'
 
-Admin.create! mobile: '10000000001',
-              name: 'Xing',
-              level: Admin::ROOT,
-              password: DB_PASSWORD,
-              password_confirmation: DB_PASSWORD
+admin = Admin.new mobile: '10000000001',
+                  name: 'Xing',
+                  level: Admin::ROOT,
+                  password: DB_PASSWORD,
+                  password_confirmation: DB_PASSWORD
+admin.save!
 
 0.upto 5 do |i|
   Admin.create! mobile: "#{20000000000 + i}",
@@ -46,3 +47,19 @@ index = 0
     index += 1
   end
 end
+
+chat = Chat.new name: 'default_chat'
+chat.save!
+
+AdminChatting.create! admin_id: admin.id,
+                      chat_id: chat.id,
+                      start_at: DateTime.now
+
+
+TeacherChatting.create! teacher_id: teachers[0].id,
+                        chat_id: chat.id,
+                        start_at: DateTime.now
+
+StudentChatting.create! student_id: Student.first.id,
+                        chat_id: chat.id,
+                        start_at: DateTime.now
