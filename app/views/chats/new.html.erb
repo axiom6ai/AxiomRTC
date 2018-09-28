@@ -1,6 +1,7 @@
 <div class="container">
   <div class="jumbotron row">
-    <div class="col-sm-8">
+   
+    <div class="col-sm-8" style="display:none;">
       <div class="select">
         <label for="audioSource"><%= t '.audio_src' %>: </label><select id="audioSource"></select>
       </div>
@@ -15,7 +16,6 @@
       </div>
     </div>
   </div>
-
   <div id="video" style="margin:0 auto;">
     <div id="agoraLocal" style="float:right;width:210px;height:147px;display:inline-block;"></div>
   </div>
@@ -33,6 +33,8 @@
 
   const APP_ID = '<%= @app_id %>';
   const CHANNEL_NAME = '<%= @chat.name %>';
+  console.log("the app id is:" + APP_ID);
+  console.log("the channel name is:" + CHANNEL_NAME);
 
   let heartBeatTimer, chatting_id;
   let client, localStream, camera, microphone;
@@ -51,7 +53,7 @@
     join_bt.disabled = true;
     var channelKey = null;
 
-    client = AgoraRTC.createClient({mode: 'interop'});
+    client = AgoraRTC.createClient({mode: 'live', codec: 'h264'});
     client.init(APP_ID, function () {
       console.log("AgoraRTC client initialized");
       client.join(channelKey, CHANNEL_NAME, null, function (uid) {
@@ -59,19 +61,19 @@
 
         camera = videoSource.value;
         microphone = audioSource.value;
+
         const config = {
           streamID: uid,
           audio: true,
-          cameraId: camera,
           microphoneId: microphone,
-          video: true,
-          screen: false
+          video: false,
+          screen: true,
+          mediaSource: 'window' // dont use application as it will not work on firefox in Windows 
         };
         console.log("uid: " + uid + ", camera: " + camera + ", mic: " + microphone);
         localStream = AgoraRTC.createStream(config);
-        if (document.getElementById("video").checked) {
-          localStream.setVideoProfile('720p_3');
-        }
+        
+   
 
         // The user has granted access to the camera and mic.
         localStream.on("accessAllowed", function () {
