@@ -49,6 +49,43 @@
 
 
   function join() {
+    var signal = Signal(APP_ID)
+    var session = signal.login("Victor", "_no_need_token")
+
+    session.onLoginSuccess = function(uid){
+      console.log("Logging into Signaling as uid:" + uid)
+      var channel = session.channelJoin(CHANNEL_NAME);
+      channel.onChannelJoined = function(){
+        
+        /* Send a channel message. */
+        channel.messageChannelSend("Welcome to Axiom Live Coding");
+
+        /* Logout of the system. */
+        //session.logout();
+      };
+
+      channel.onMessageChannelReceive = function(account, uid, msg){
+          console.log("Got a message");
+      }
+
+      channel.onChannelJoined = function(account, uid) {
+        console.log(account + " has joined")
+      };
+
+      channel.onChannelUserLeaved = function(account, uid) {
+        console.log(account + " has left")
+      };
+      
+      channel.onChannelUserList = function(users) {
+        console.log("Joined " + CHANNEL_NAME + " with " + users)
+
+      };
+    };
+
+    session.onLogout = function(ecode){
+    /* Set the onLogout callback. */
+    }
+
     leave();
     join_bt.disabled = true;
     var channelKey = null;
@@ -285,3 +322,4 @@
 </script>
 
 <%= javascript_include_tag 'AgoraRTCSDK-2.4.0', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'AgoraSig-1.4.0.js', 'data-turbolinks-track': 'reload' %>
