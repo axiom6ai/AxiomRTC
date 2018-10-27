@@ -1,6 +1,5 @@
 class ChatsController < ApplicationController
   before_action :logged_in
-  before_action :cors_set_access_control_headers 
   before_action :set_chat, only: [:show]
 
   # GET /chats
