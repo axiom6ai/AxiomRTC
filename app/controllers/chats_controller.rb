@@ -1,5 +1,6 @@
 class ChatsController < ApplicationController
   before_action :logged_in
+  before_action :cors_set_access_control_headers 
   before_action :set_chat, only: [:show]
 
   # GET /chats
@@ -25,7 +26,7 @@ class ChatsController < ApplicationController
 
   # GET /chats/new
   def new
-    @chat = Chat.new name: '1000'
+    @chat = Chat.new name: 'Coding'
     if @chat.save
       @app_id = '6c503009f94f42459ffa73cbd8a4c7de'
       @local_uid = if current_admin

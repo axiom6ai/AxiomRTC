@@ -9,6 +9,12 @@ Bundler.require(*Rails.groups)
 module AxiomRTC
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+
+  config.action_dispatch.default_headers = {
+    'Access-Control-Allow-Origin' => '*',
+    'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
+    }
+      
     config.load_defaults 5.2
 
     config.time_zone = 'Beijing'

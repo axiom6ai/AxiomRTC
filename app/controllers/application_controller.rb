@@ -7,6 +7,13 @@ class ApplicationController < ActionController::Base
   include TeacherSessionsHelper
   include ApplicationHelper
 
+  def cors_set_access_control_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+    headers['Access-Control-Request-Method'] = '*'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  end
+
   def logged_in_admin
     return if current_admin
     redirect_to new_admin_sessions_path
