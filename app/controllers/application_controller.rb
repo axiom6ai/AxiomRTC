@@ -32,4 +32,8 @@ class ApplicationController < ActionController::Base
     redirect_to login_path
   end
 
+  def redirect_to_live
+    redirect_to 'https://axiom6.ai/live'
+  end
+
 end
