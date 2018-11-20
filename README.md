@@ -23,6 +23,10 @@ Setup database:
 Fire up the server:
 
     $ rails s
+
+Fire up the server with https: 
+
+    $ nohup rbenv sudo rails s puma -b 'ssl://0.0.0.0:443?key=id_rsa&cert=axiom6_ai.crt&verify_mode=none&ca=axiom6_ai.ca-bundle' & 
     
 Now you can visit `http://localhost:3000`
 
@@ -43,6 +47,12 @@ to
 to enable Chinese version.
 
 It's better to add localization parsing in routing.
+
+## Starting HTTPS Server 
+
+Fire up the server:
+
+    $ nohup rbenv sudo rails s puma -b 'ssl://0.0.0.0:443?key=id_rsa&cert=axiom6_ai.crt&verify_mode=none&ca=axiom6_ai.ca-bundle' &
 
 ## Characters
 
