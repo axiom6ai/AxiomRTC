@@ -54,7 +54,9 @@
   let screenUid
   let videoUid
   
-
+  var videoClient
+  var videoStream
+  var localStreams = [];
 
   function join() {
     
@@ -95,7 +97,7 @@
     }
     
     // register screen sharing 
-    var localStreams = [];
+
     leave();
     join_bt.disabled = true;
     var channelKey = null;
@@ -103,8 +105,8 @@
     screenShareClient = AgoraRTC.createClient({mode: 'live', codec: 'h264'});
     screenShareClient.init(APP_ID, function () {
       console.log("AgoraRTC screen sharing client initialized");
-      screenShareClient.join(channelKey, CHANNEL_NAME, null, function (uid) {
-        console.log("User " + uid + " join channel successfully");
+      screenShareClient.join(channelKey, CHANNEL_NAME, 1, function (uid) {
+        console.log("Screen sharing: User " + uid + " join channel successfully");
         localStreams.push(uid);
         screenUid = uid
         const config = {
@@ -140,6 +142,7 @@
 
           screenShareClient.on('stream-published', function (event) {
             console.log("stream-published: done");
+            setupVideConference(localStreams);
           });
         }, function (err) {
           console.error('localStream.init: ' + err);
@@ -176,6 +179,9 @@
           console.error("screenShareClient.subscribe: " + err);
         });
       }
+
+    
+
     });
 
     screenShareClient.on('stream-subscribed', function (evt) {
@@ -209,12 +215,16 @@
       leave_bt.disabled = false;
     }
 
-    // enable video and audio 
-    var videoClient = AgoraRTC.createClient({mode: 'rtc', codec: 'h264'});
-    videoClient.init(APP_ID, function() {
-      videoClient.join(channelKey, CHANNEL_NAME, null, function(uid) {
+    
+  }
 
-      console.log("Video and audio joined channel")
+  function setupVideConference(localStreams) {
+    // enable video and audio 
+    var channelKey = null
+    videoClient = AgoraRTC.createClient({mode: 'interop', codec: 'h264'});
+    videoClient.init(APP_ID, function() {
+    videoClient.join(channelKey, CHANNEL_NAME, 2, function(uid) {
+      console.log("Video and audio joined channel with uid:" + uid)
     
       // Save the uid of the local stream.
       videoUid = uid
@@ -222,9 +232,8 @@
       camera = videoSource.value;
       microphone = audioSource.value;
 
-
       // Create the video stream.
-      var videoStream = AgoraRTC.createStream({
+      videoStream = AgoraRTC.createStream({
         streamID: uid,
         audio: true,
         microphoneId: microphone,
@@ -238,7 +247,14 @@
         // Play the stream.
         videoStream.play('agoraVideo');
         // Publish the stream.
-        videoClient.publish(videoStream);
+  
+        videoClient.publish(videoStream, function (err) {
+          console.error("videoClient.publish: " + err);
+        });
+
+        videoClient.on('stream-published', function (event) {
+          console.log("Video conference stream-published: done");
+        });
 
         // Listen to the 'stream-added' event.
         videoClient.on('stream-added', function(evt){
@@ -261,6 +277,7 @@
     });
   }
 
+
   function leave() {
     leave_bt.disabled = true;
 
@@ -268,7 +285,7 @@
     if (channel !== undefined) {
       channel.channelLeave()
     }
-  
+    
     if (screenShareClient) {
       screenShareClient.leave(function () {
         console.log('screenShareClient.leave: done');
@@ -277,6 +294,20 @@
         leave_bt.disabled = false;
       });
       screenShareClient = null;
+    }
+
+    if (videoClient) {
+      videoClient.leave(function() {
+        console.log('videoClient.leave: done');
+      }, function (err){
+        console.error('videoClient.leave: ' + err);
+      });
+      videoClient = null;
+    }
+
+    if (videoStream) {
+      videoStream.stop();
+      videoStream = null;
     }
 
     if (localStream) {
@@ -388,5 +419,5 @@
   getDevices();
 </script>
 
-<%= javascript_include_tag 'AgoraRTCSDK-2.4.1', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'AgoraRTCSDK-2.5.0', 'data-turbolinks-track': 'reload' %>
 <%= javascript_include_tag 'AgoraSig-1.4.0.js', 'data-turbolinks-track': 'reload' %>

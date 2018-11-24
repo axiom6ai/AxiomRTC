@@ -50,6 +50,10 @@ It's better to add localization parsing in routing.
 
 ## Starting HTTPS Server 
 
+Pre-compile javascript assets 
+
+    $ RAILS_ENV=development bundle exec rake assets:precompile
+
 Fire up the server:
 
     $ nohup rbenv sudo rails s puma -b 'ssl://0.0.0.0:443?key=id_rsa&cert=axiom6_ai.crt&verify_mode=none&ca=axiom6_ai.ca-bundle' &
