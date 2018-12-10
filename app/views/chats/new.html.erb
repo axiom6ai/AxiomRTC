@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="jumbotron row">
+  <div class="row">
    
     <div class="col-sm-8" style="display:none;">
       <div class="select">
@@ -11,18 +11,26 @@
     </div>
     <div class="col-sm-4">
       <div class="row">
-        <button id="join" class="btn btn-primary" onclick="join()"><%= t '.join' %></button>
-        <button id="leave" class="btn btn-primary" onclick="leave()"><%= t '.leave' %></button>
+
       </div>
     </div>
   </div>
-  <div id="video" style="margin:0 auto;">
-    <div id="agoraLocal" style="float:right;width:210px;height:147px;display:inline-block;"></div>
-  </div>
-  <div id="selfie" style="margin:0 auto;">
-    <div id="agoraVideo" style="float:right;width:210px;height:147px;display:inline-block;"></div>
-  </div>
 </div>
+
+<div class="grid-container">
+    <div id="agoraLocal" class="screen" style="float:left; width:100%;height:600px;"></div>
+    <div class="chat"> 
+      <textarea id="chat-viewer" rows="5" readonly></textarea>
+      <textarea id="chat-typer" name="typer" rows="1" cols="50" placeholder="Start chatting here." onkeypress="return onChatReturn(this, event);"></textarea>
+      <button id="chat-send" class="btn btn-success" onclick="sendMessage()">Send</button>
+    </div>
+    <div class="join-leave">
+      <button id="join" class="btn btn-primary" onclick="join()"><%= t '.join' %></button>
+      <button id="leave" class="btn btn-primary" onclick="leave()"><%= t '.leave' %></button>     
+    </div>
+    <div id="agoraVideo" class="video" style="float:right;width:200px;height:150px;"></div>     
+    </div>
+  </div>
 
 <script language="javascript">
 
@@ -58,24 +66,82 @@
   var videoStream
   var localStreams = [];
 
+  function onChatReturn(chatInstance, event) {
+    var key = event.keyCode
+    // If the user has pressed enter
+    if (key === 13) {
+      event.preventDefault();
+      sendMessage();
+      console.log("Return press");
+    }
+  }
+  
+  function sendMessage() {
+    var typer = document.getElementById("chat-typer");
+    var msg = typer.value;
+
+    channel.messageChannelSend(msg, function(){
+      typer.value = '';
+      typer.focus();
+      typer.setSelectionRange(0,0);
+
+    });
+  }
+
+  function printMessage(msg) {
+    var viewer = document.getElementById('chat-viewer');
+    viewer.value += msg + "\n";
+    viewer.scrollTop = viewer.scrollHeight;
+  }
+
+  function hideChat() {
+    document.getElementById('chat-viewer').style.visibility = 'hidden';
+    document.getElementById('chat-typer').style.visibility = 'hidden';
+    document.getElementById('chat-send').style.visibility = 'hidden';
+  }
+
+  function showChat() {
+    document.getElementById('chat-viewer').style.visibility = 'visible';
+    document.getElementById('chat-typer').style.visibility = 'visible';
+    document.getElementById('chat-send').style.visibility = 'visible';
+  }
+
   function join() {
     
     // Signal enable messaging between users 
     signal = Signal(APP_ID)
     session = signal.login("Victor", "_no_need_token")
 
+    // peer to peer message
+    /*
+    session.messageInstantSend(peer, msg, function() {
+
+    }); 
+
+    channel.messageChannelSend(msg, function(){
+
+    });
+
+    session.onMessageInstantReceive(account, uid, msg) {
+
+    }
+
+
+    */
+
     session.onLoginSuccess = function(uid){
       console.log("Signal: Logging into Signaling as uid:" + uid)
       channel = session.channelJoin(CHANNEL_NAME);
-      channel.onChannelJoined = function(){
-        
-        channel.messageChannelSend("Signal: Welcome to Axiom Live Coding");
+      printMessage("Welcome to Axiom Live!\nEntered Chat Room");
+      showChat();
 
-        //session.logout();
+      channel.onChannelJoined = function(){
+        console.log("Signal: onChannelJoined");
       };
 
       channel.onMessageChannelReceive = function(account, uid, msg){
           console.log("Signal: Got a message");
+          printMessage(account + ": " + msg);
       }
 
       channel.onChannelJoined = function(account, uid) {
@@ -90,6 +156,7 @@
         console.log("Signal: Joined " + CHANNEL_NAME + " with " + users)
 
       };
+      
     };
 
     session.onLogout = function(ecode){
@@ -283,7 +350,8 @@
 
     // leave signal
     if (channel !== undefined) {
-      channel.channelLeave()
+      channel.channelLeave();
+      hideChat();
     }
     
     if (screenShareClient) {
@@ -306,6 +374,8 @@
     }
 
     if (videoStream) {
+      videoStream.disableVideo();
+      videoStream.disableAudio();
       videoStream.stop();
       videoStream = null;
     }
@@ -416,8 +486,13 @@
     leave();
   });
 
+  window.onload = function() {
+    hideChat();
+  }
+
   getDevices();
 </script>
 
 <%= javascript_include_tag 'AgoraRTCSDK-2.5.0', 'data-turbolinks-track': 'reload' %>
 <%= javascript_include_tag 'AgoraSig-1.4.0.js', 'data-turbolinks-track': 'reload' %>
+<%= stylesheet_link_tag "" %>

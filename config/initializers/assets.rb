@@ -14,3 +14,5 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 Rails.application.config.assets.precompile += %w(AgoraRTCSDK-2.5.0.js)
 Rails.application.config.assets.precompile += %w(AgoraSig-1.4.0.js)
+Rails.application.config.assets.precompile += %w(chat.css)
+
