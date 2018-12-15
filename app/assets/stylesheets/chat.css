@@ -40,6 +40,7 @@
     border: 1px solid grey;
     padding: 10px 10px;
     margin-top: 2%;
+    visibility: hidden;
 }
 
 #chat-typer {
@@ -50,9 +51,10 @@
     border: 1px solid grey;
     padding: 10px 10px;
     margin-top: 2%;
+    visibility: hidden;
 }
 
 #chat-send {
     margin-top: 2%;
+    visibility: hidden;
 }
-
