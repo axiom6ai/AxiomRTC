@@ -35,9 +35,4 @@ class ApplicationController < ActionController::Base
   def redirect_to_live
     redirect_to 'https://axiom6.ai/live'
   end
-
-  def redirect_to_live
-    redirect_to 'http://axiom6.ai:9000/'
-  end
-
 end
